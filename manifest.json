@@ -1,0 +1,21 @@
+{
+	"name": "Clappy Bird!",
+	"short_name": "Clappy Bird",
+	"theme_color": "#2196f3",
+	"background_color": "#2196f3",
+	"display": "standalone",
+	"orientation": "portrait",
+	"scope": "./",
+	"start_url": "./index.html",
+	"icons": [
+		{
+			"src": "icon.png",
+			"sizes": "144x144"
+		},
+		{
+			"src": "icon.png",
+			"sizes": "144x144",
+			"purpose": "maskable"
+		}
+]
+}
