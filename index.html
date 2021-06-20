@@ -63,10 +63,10 @@
 	</style>
 </head>
 
-<body onload="startGame()">
+<body onload="startGame()" id="body">
 	<script>
     
-    
+   		 document.getElementById("body").addEventListener("keypress", function(){ accelerate(speed); });
     
 		if ('serviceWorker' in navigator) {
 		  navigator.serviceWorker.register('sw.js');
