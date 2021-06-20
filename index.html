@@ -1,4 +1,4 @@
-OwoO<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -14,7 +14,14 @@ OwoO<!DOCTYPE html>
 		canvas {
 			border: 1px solid #bbbbbb;
 			background-color: #2196f3;
-		}d
+		}
+        
+        button {
+        	background: white;
+            border: 1px solid rgba(255,255,255,0.5); 
+            padding: 20px;
+            border-radius: 30px;
+        }
 
 		.slidecontainer {
 			width: 100%;
@@ -58,23 +65,38 @@ OwoO<!DOCTYPE html>
 
 <body onload="startGame()">
 	<script>
+    
+    
+    
 		if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
-}
+		  navigator.serviceWorker.register('sw.js');
+		}
 
-		var myGamePiece, myScore, speed, vaild;
+		var myGamePiece, myScore, speed;
+        var vaild = false;
 		var myObstacles = [];
 
 		function startGame() {
-			var slider = document.getElementById("myRange");
-			var output = document.getElementById("demo");
-			speed = slider.value / 100;
+        
+        
+			var jumpSlider = document.getElementById("jumpHeight");
+			speed = jumpSlider.value / 100;
 
-			slider.oninput = function () {
+			jumpSlider.oninput = function () {
 				speed = this.value / 100;
 			}
+            
+            
+            var gravitySlider = document.getElementById("gravityStrength");
+			gravity = gravitySlider.value / 100;
+
+			gravitySlider.oninput = function () {
+				gravity = this.value / 100;
+			}
+            
+            
 			myGamePiece = new component(30, 30, "red", 10, 120);
-			myGamePiece.gravity = 0.05;
+			myGamePiece.gravity = gravity;
 			myScore = new component("30px", "arial", "black", 280, 40, "text");
 			myGameArea.start();
 		}
@@ -216,17 +238,18 @@ OwoO<!DOCTYPE html>
 		}
 
 		function checkLicense() {
-			var LicenseCodes = ["Q1MtTlhETUxUN1g2U1JO", "Q1MtUzJMTk5EWEs2UjY3", "Q1MtNkdNS1lSNEZUR0Iz", "Q1MtSFlMQkRRRFlHMlE4", "Q1MtQ1BMUkNKNkRSNzQz", "Q1MtVVJINU1OTkhOWEFU", "Q1MtWEhRTURDSlJRRzc4", "Q1MtQzNLRVU5U1ZRVUFV", "Q1MtUFk1S1FZVlJMNzND", "Q1MtQzUzOFRSR0QyUDVD", "Q1MtUlIyMjc0UE03ODQ4", "Q1MtWDdaVEZNUzc2WlNV"]
+			var LicenseCodes = ["Q1MtTlhETUxUN1g2U1JO", "Q1MtUzJMTk5EWEs2UjY3", "Q1MtNkdNS1lSNEZUR0Iz", "Q1MtSFlMQkRRRFlHMlE4", "Q1MtQ1BMUkNKNkRSNzQz", "Q1MtVVJINU1OTkhOWEFU", "Q1MtWEhRTURDSlJRRzc4", "Q1MtQzNLRVU5U1ZRVUFV", "Q1MtUFk1S1FZVlJMNzND", "Q1MtQzUzOFRSR0QyUDVD", "Q1MtUlIyMjc0UE03ODQ4", "Q1MtWDdaVEZNUzc2WlNV", "Q1MtdGVzdA=="]
 
-			while (vaild == false) {
+			while (vaild !== true) {
 				if (localStorage.getItem("vaild") == true) {
 					vaild = true;
-					break
 				}
-				var input = prompt("Please Enter Product Code (eg: CS-N..........N):", "CS-")
-				var n = LicenseCodes.includes(input.btoa);
-				if (n = true) {
-					localStorage.setItem("vaild", true)
+				var input = prompt("Please Enter Product Code", "CS-")
+                var inputEncrypted = btoa(input)
+				var productVaild = LicenseCodes.includes(inputEncrypted);
+				if (productVaild == true) {
+					localStorage.setItem("vaild", true);
+                    vaild = true;
 				}
 			}
 		}
@@ -239,9 +262,15 @@ OwoO<!DOCTYPE html>
 		<button onclick="restart()">Restart!</button>
 	</div>
 	<div>
-		<p id="titleJump">Gravity and Jump Height:</p>
+		<p id="titleJump">Jump Height:</p>
 		<div class="slidecontainer">
-			<input type="range" min="1" aria-label="titleJump" max="10" value="5" class="slider" id="myRange">
+			<input type="range" min="1" aria-label="titleJump" max="10" value="5" class="slider" id="jumpHeight">
+		</div>
+	</div>
+    <div>
+		<p id="titleGravity">Gravity Strength:</p>
+		<div class="slidecontainer">
+			<input type="range" min="1" aria-label="titleGravity" max="10" value="5" class="slider" id="gravityStrength">
 		</div>
 	</div>
 	<a href=help/privacy.md>Privacy Policy</a>
