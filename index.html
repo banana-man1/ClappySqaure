@@ -65,8 +65,7 @@
 
 <body onload="startGame()" id="body">
 	<script>
-    
-   		 document.getElementById("body").addEventListener("keypress", function(){ accelerate(speed); });
+   		 document.getElementById("body").addEventListener("keypress", keypress);
     
 		if ('serviceWorker' in navigator) {
 		  navigator.serviceWorker.register('sw.js');
@@ -211,7 +210,11 @@
 			if ((myGameArea.frameNo / n) % 1 == 0) { return true; }
 			return false;
 		}
-
+		
+        function keypress() {
+        	
+        }
+        
 		function accelerate(n) {
 			if (!myGameArea.interval) { myGameArea.interval = setInterval(updateGameArea, 20); }
 
