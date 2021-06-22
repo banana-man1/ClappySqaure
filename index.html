@@ -63,21 +63,23 @@
 	</style>
 </head>
 
-<body onload="startGame()" id="body">
+<body onload="startGame()" onkeypress="keypress()">
 	<script>
-   		 document.getElementById("body").addEventListener("keypress", keypress);
+    	console.log("HEY! ")
+    	var myGamePiece, myScore, speed;
+        var vaild = false;
+		var myObstacles = [];
+    	function keypress() {
+        	accelerate(speed)
+        }
+        
+   		//document.getElementById("body").addEventListener("keypress", keypress);
     
 		if ('serviceWorker' in navigator) {
 		  navigator.serviceWorker.register('sw.js');
 		}
 
-		var myGamePiece, myScore, speed;
-        var vaild = false;
-		var myObstacles = [];
-
 		function startGame() {
-        
-        
 			var jumpSlider = document.getElementById("jumpHeight");
 			speed = jumpSlider.value / 100;
 
@@ -211,9 +213,7 @@
 			return false;
 		}
 		
-        function keypress() {
-        	
-        }
+        
         
 		function accelerate(n) {
 			if (!myGameArea.interval) { myGameArea.interval = setInterval(updateGameArea, 20); }
