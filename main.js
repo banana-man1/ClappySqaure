@@ -166,7 +166,9 @@ document.onkeydown = function(e) {
             return false;
         }
 
-
+function accelerate(n) {
+    myGamePiece.gravity = n;
+}
 
         
 
