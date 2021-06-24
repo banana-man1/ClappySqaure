@@ -1,237 +1,242 @@
-console.log("HEY! I'm Watching...")
-        var myGamePiece, myScore, speed;
-        var vaild = false;
-        var myObstacles = [];
-        function keypress() {
-            accelerate(speed)
-        }
-
-        //document.getElementById("body").addEventListener("keypress", keypress);
-
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js');
-        }
-
-        function startGame() {
-            var jumpSlider = document.getElementById("jumpHeight");
-            speed = jumpSlider.value / 100;
-
-            jumpSlider.oninput = function () {
-                speed = this.value / 100;
-            }
 
 
-            var gravitySlider = document.getElementById("gravityStrength");
-            gravity = gravitySlider.value / 100;
+var code = atob("
+Y29uc29sZS5sb2coIkhFWSEgSSdtIFdhdGNoaW5nLi4uIik
+ICAgICAgICB2YXIgbXlHYW1lUGllY2UsIG15U2NvcmUsIHNwZWVkOw
+ICAgICAgICB2YXIgdmFpbGQgPSBmYWxzZTs
+ICAgICAgICB2YXIgbXlPYnN0YWNsZXMgPSBbXTs
+ICAgICAgICBmdW5jdGlvbiBrZXlwcmVzcygpIHs
+ICAgICAgICAgICAgYWNjZWxlcmF0ZShzcGVlZCk
+ICAgICAgICB9
 
-            gravitySlider.oninput = function () {
-                gravity = this.value / 100;
-            }
+ICAgICAgICAvL2RvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJib2R5IikuYWRkRXZlbnRMaXN0ZW5lcigia2V5cHJlc3MiLCBrZXlwcmVzcyk7
 
+ICAgICAgICBpZiAoJ3NlcnZpY2VXb3JrZXInIGluIG5hdmlnYXRvcikgew
+ICAgICAgICAgICAgbmF2aWdhdG9yLnNlcnZpY2VXb3JrZXIucmVnaXN0ZXIoJ3N3LmpzJyk7
+ICAgICAgICB9
 
-            myGamePiece = new component(30, 30, "red", 10, 120);
-            myGamePiece.gravity = gravity;
-            myScore = new component("30px", "arial", "black", 280, 40, "text");
-            myGameArea.start();
-        }
+ICAgICAgICBmdW5jdGlvbiBzdGFydEdhbWUoKSB7
+ICAgICAgICAgICAgdmFyIGp1bXBTbGlkZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgianVtcEhlaWdodCIpOw
+ICAgICAgICAgICAgc3BlZWQgPSBqdW1wU2xpZGVyLnZhbHVlIC8gMTAwOw
 
-        var myGameArea = {
-            canvas: document.createElement("canvas"),
-            start: function () {
-                this.canvas.id = "canvas"
-                this.canvas.width = 480;
-                this.canvas.height = 270;
-                this.context = this.canvas.getContext("2d");
-                document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-                this.frameNo = 0;
-                updateGameArea();
-            },
-            clear: function () {
-                this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            }
-        }
-
-        function component(width, height, color, x, y, type) {
-            this.type = type;
-            this.score = 0;
-            this.width = width;
-            this.height = height;
-            this.speedX = 0;
-            this.speedY = 0;
-            this.x = x;
-            this.y = y;
-            this.gravity = 0;
-            this.gravitySpeed = 0;
-            this.update = function () {
-                ctx = myGameArea.context;
-                if (this.type == "text") {
-                    ctx.font = this.width + " " + this.height;
-                    ctx.fillStyle = color;
-                    ctx.fillText(this.text, this.x, this.y);
-                } else {
-                    ctx.fillStyle = color;
-                    ctx.fillRect(this.x, this.y, this.width, this.height);
-                }
-            }
-            this.newPos = function () {
-                this.gravitySpeed += this.gravity;
-                this.x += this.speedX;
-                this.y += this.speedY + this.gravitySpeed;
-                this.hitBottom();
-                this.hitTop();
-            }
-            this.hitBottom = function () {
-                var rockbottom = myGameArea.canvas.height - this.height;
-                if (this.y > rockbottom) {
-                    this.y = rockbottom;
-                    this.gravitySpeed = 0;
-                }
-            }
-            this.hitTop = function () {
-                var rocktop = 0;
-                if (this.y < rocktop) {
-                    this.y = rocktop;
-                    this.gravitySpeed = 0;
-                }
-            }
-            this.crashWith = function (otherobj) {
-                var myleft = this.x;
-                var myright = this.x + (this.width);
-                var mytop = this.y;
-                var mybottom = this.y + (this.height);
-                var otherleft = otherobj.x;
-                var otherright = otherobj.x + (otherobj.width);
-                var othertop = otherobj.y;
-                var otherbottom = otherobj.y + (otherobj.height);
-                var crash = true;
-                if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
-                    crash = false;
-                }
-                return crash;
-            }
-        }
-
-        function updateGameArea() {
-            var x,
-            height,
-            gap,
-            minHeight,
-            maxHeight,
-            minGap,
-            maxGap;
-            for (i = 0; i < myObstacles.length; i += 1) {
-                if (myGamePiece.crashWith(myObstacles[i])) {
-                    return;
-                }
-            }
-            myGameArea.clear();
-            myGameArea.frameNo += 1;
-            if (myGameArea.frameNo == 1 || everyinterval(150)) {
-                x = myGameArea.canvas.width;
-                minHeight = 20;
-                maxHeight = 200;
-                height = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight);
-                minGap = 50;
-                maxGap = 200;
-                gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
-                myObstacles.push(new component(10, height, "green", x, 0));
-                myObstacles.push(new component(10, x - height - gap, "green", x, height + gap));
-            }
-            for (i = 0; i < myObstacles.length; i += 1) {
-                myObstacles[i].x += -1;
-                myObstacles[i].update();
-            }
-            myScore.text = "SCORE: " + myGameArea.frameNo;
-            myScore.update();
-            myGamePiece.newPos();
-            myGamePiece.update();
-        }
-
-        function everyinterval(n) {
-            if ((myGameArea.frameNo / n) % 1 == 0) {
-                return true;
-            }
-            return false;
-        }
+ICAgICAgICAgICAganVtcFNsaWRlci5vbmlucHV0ID0gZnVuY3Rpb24gKCkgew
+ICAgICAgICAgICAgICAgIHNwZWVkID0gdGhpcy52YWx1ZSAvIDEwMDs
+ICAgICAgICAgICAgfQ
 
 
+ICAgICAgICAgICAgdmFyIGdyYXZpdHlTbGlkZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZ3Jhdml0eVN0cmVuZ3RoIik7
+ICAgICAgICAgICAgZ3Jhdml0eSA9IGdyYXZpdHlTbGlkZXIudmFsdWUgLyAxMDA7
 
-        function accelerate(n) {
-            if (!myGameArea.interval) {
-                myGameArea.interval = setInterval(updateGameArea, 20);
-            }
+ICAgICAgICAgICAgZ3Jhdml0eVNsaWRlci5vbmlucHV0ID0gZnVuY3Rpb24gKCkgew
+ICAgICAgICAgICAgICAgIGdyYXZpdHkgPSB0aGlzLnZhbHVlIC8gMTAwOw
+ICAgICAgICAgICAgfQ
 
-            myGamePiece.gravity = n;
-        }
 
-        function freeze() {
-            startGame();
-            canvas: document.getElementById("canvas")
-            myObstacles = [];
-            myGameArea = {
-                canvas: document.getElementById("canvas"),
-                start: function () {
-                    document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-                    this.frameNo = 0;
-                    updateGameArea();
-                },
-            }
-            this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        }
+ICAgICAgICAgICAgbXlHYW1lUGllY2UgPSBuZXcgY29tcG9uZW50KDMwLCAzMCwgInJlZCIsIDEwLCAxMjApOw
+ICAgICAgICAgICAgbXlHYW1lUGllY2UuZ3Jhdml0eSA9IGdyYXZpdHk7
+ICAgICAgICAgICAgbXlTY29yZSA9IG5ldyBjb21wb25lbnQoIjMwcHgiLCAiYXJpYWwiLCAiYmxhY2siLCAyODAsIDQwLCAidGV4dCIpOw
+ICAgICAgICAgICAgbXlHYW1lQXJlYS5zdGFydCgpOw
+ICAgICAgICB9
 
-        function restart() {
-            location.reload()
-        }
+ICAgICAgICB2YXIgbXlHYW1lQXJlYSA9IHs
+ICAgICAgICAgICAgY2FudmFzOiBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCJjYW52YXMiKSw
+ICAgICAgICAgICAgc3RhcnQ6IGZ1bmN0aW9uICgpIHs
+ICAgICAgICAgICAgICAgIHRoaXMuY2FudmFzLmlkID0gImNhbnZhcyI
+ICAgICAgICAgICAgICAgIHRoaXMuY2FudmFzLndpZHRoID0gNDgwOw
+ICAgICAgICAgICAgICAgIHRoaXMuY2FudmFzLmhlaWdodCA9IDI3MDs
+ICAgICAgICAgICAgICAgIHRoaXMuY29udGV4dCA9IHRoaXMuY2FudmFzLmdldENvbnRleHQoIjJkIik7
+ICAgICAgICAgICAgICAgIGRvY3VtZW50LmJvZHkuaW5zZXJ0QmVmb3JlKHRoaXMuY2FudmFzLCBkb2N1bWVudC5ib2R5LmNoaWxkTm9kZXNbMF0pOw
+ICAgICAgICAgICAgICAgIHRoaXMuZnJhbWVObyA9IDA7
+ICAgICAgICAgICAgICAgIHVwZGF0ZUdhbWVBcmVhKCk7
+ICAgICAgICAgICAgfSw
+ICAgICAgICAgICAgY2xlYXI6IGZ1bmN0aW9uICgpIHs
+ICAgICAgICAgICAgICAgIHRoaXMuY29udGV4dC5jbGVhclJlY3QoMCwgMCwgdGhpcy5jYW52YXMud2lkdGgsIHRoaXMuY2FudmFzLmhlaWdodCk7
+ICAgICAgICAgICAgfQ
+ICAgICAgICB9
 
-        function checkLicense() {
-            var LicenseCodes =
-            ["Q1MtS0JFODBURTk=",
-                "Q1MtMk9KU09HUkg=",
-                "Q1MtTldZM1NRVEo=",
-                "Q1MtUlRETVBQMTc=",
-                "Q1MtU0E5VUFFNlg=",
-                "Q1MtWUNYTVhDSVY=",
-                "Q1MtSzgwUlVWMjQ=",
-                "Q1MtOVBBMkxaMzY=",
-                "Q1MtQUQzQUtHUjU=",
-                "Q1MtWkhBRlJJSjI=",
-                "Q1MtTU5DTDZDQk8=",
-                "Q1MtNzhPTkhFRzE=",
-                "Q1MtS1lZWUtIOUU=",
-                "Q1MtSzlaRUIzWEo=",
-                "Q1MtSkg4QVNSMjE=",
-                "Q1MtOThBR0U2Q1o=",
-                "Q1MtQ0Y1TzMzTks=",
-                "Q1MtUDFYQTlHU1E=",
-                "Q1MtTUJXTUlPRkQ=",
-                "Q1MtTDVTUlhQRkQ=",
-                "Q1MtVkpaQlhGTUI=",
-                "Q1MtSFpGUElXRDU=",
-                "Q1MtTTJMOFFJOTk=",
-                "Q1MtU0tJVzdBWVo=",
-                "Q1MtVUdaUVNLSVg=",
-                "Q1MtWlBYVFM1NTc=",
-                "Q1MtRVZVTVlDVFk=",
-                "Q1MtVjZEUFhCNjE=",
-                "Q1MtWFpYWllTWFU=",
-                "Q1MtV0kxR05NS0c=",
-                "Q1MtVEVTVA=="]
+ICAgICAgICBmdW5jdGlvbiBjb21wb25lbnQod2lkdGgsIGhlaWdodCwgY29sb3IsIHgsIHksIHR5cGUpIHs
+ICAgICAgICAgICAgdGhpcy50eXBlID0gdHlwZTs
+ICAgICAgICAgICAgdGhpcy5zY29yZSA9IDA7
+ICAgICAgICAgICAgdGhpcy53aWR0aCA9IHdpZHRoOw
+ICAgICAgICAgICAgdGhpcy5oZWlnaHQgPSBoZWlnaHQ7
+ICAgICAgICAgICAgdGhpcy5zcGVlZFggPSAwOw
+ICAgICAgICAgICAgdGhpcy5zcGVlZFkgPSAwOw
+ICAgICAgICAgICAgdGhpcy54ID0geDs
+ICAgICAgICAgICAgdGhpcy55ID0geTs
+ICAgICAgICAgICAgdGhpcy5ncmF2aXR5ID0gMDs
+ICAgICAgICAgICAgdGhpcy5ncmF2aXR5U3BlZWQgPSAwOw
+ICAgICAgICAgICAgdGhpcy51cGRhdGUgPSBmdW5jdGlvbiAoKSB7
+ICAgICAgICAgICAgICAgIGN0eCA9IG15R2FtZUFyZWEuY29udGV4dDs
+ICAgICAgICAgICAgICAgIGlmICh0aGlzLnR5cGUgPT0gInRleHQiKSB7
+ICAgICAgICAgICAgICAgICAgICBjdHguZm9udCA9IHRoaXMud2lkdGggKyAiICIgKyB0aGlzLmhlaWdodDs
+ICAgICAgICAgICAgICAgICAgICBjdHguZmlsbFN0eWxlID0gY29sb3I7
+ICAgICAgICAgICAgICAgICAgICBjdHguZmlsbFRleHQodGhpcy50ZXh0LCB0aGlzLngsIHRoaXMueSk7
+ICAgICAgICAgICAgICAgIH0gZWxzZSB7
+ICAgICAgICAgICAgICAgICAgICBjdHguZmlsbFN0eWxlID0gY29sb3I7
+ICAgICAgICAgICAgICAgICAgICBjdHguZmlsbFJlY3QodGhpcy54LCB0aGlzLnksIHRoaXMud2lkdGgsIHRoaXMuaGVpZ2h0KTs
+ICAgICAgICAgICAgICAgIH0
+ICAgICAgICAgICAgfQ
+ICAgICAgICAgICAgdGhpcy5uZXdQb3MgPSBmdW5jdGlvbiAoKSB7
+ICAgICAgICAgICAgICAgIHRoaXMuZ3Jhdml0eVNwZWVkICs9IHRoaXMuZ3Jhdml0eTs
+ICAgICAgICAgICAgICAgIHRoaXMueCArPSB0aGlzLnNwZWVkWDs
+ICAgICAgICAgICAgICAgIHRoaXMueSArPSB0aGlzLnNwZWVkWSArIHRoaXMuZ3Jhdml0eVNwZWVkOw
+ICAgICAgICAgICAgICAgIHRoaXMuaGl0Qm90dG9tKCk7
+ICAgICAgICAgICAgICAgIHRoaXMuaGl0VG9wKCk7
+ICAgICAgICAgICAgfQ
+ICAgICAgICAgICAgdGhpcy5oaXRCb3R0b20gPSBmdW5jdGlvbiAoKSB7
+ICAgICAgICAgICAgICAgIHZhciByb2NrYm90dG9tID0gbXlHYW1lQXJlYS5jYW52YXMuaGVpZ2h0IC0gdGhpcy5oZWlnaHQ7
+ICAgICAgICAgICAgICAgIGlmICh0aGlzLnkgPiByb2NrYm90dG9tKSB7
+ICAgICAgICAgICAgICAgICAgICB0aGlzLnkgPSByb2NrYm90dG9tOw
+ICAgICAgICAgICAgICAgICAgICB0aGlzLmdyYXZpdHlTcGVlZCA9IDA7
+ICAgICAgICAgICAgICAgIH0
+ICAgICAgICAgICAgfQ
+ICAgICAgICAgICAgdGhpcy5oaXRUb3AgPSBmdW5jdGlvbiAoKSB7
+ICAgICAgICAgICAgICAgIHZhciByb2NrdG9wID0gMDs
+ICAgICAgICAgICAgICAgIGlmICh0aGlzLnkgPCByb2NrdG9wKSB7
+ICAgICAgICAgICAgICAgICAgICB0aGlzLnkgPSByb2NrdG9wOw
+ICAgICAgICAgICAgICAgICAgICB0aGlzLmdyYXZpdHlTcGVlZCA9IDA7
+ICAgICAgICAgICAgICAgIH0
+ICAgICAgICAgICAgfQ
+ICAgICAgICAgICAgdGhpcy5jcmFzaFdpdGggPSBmdW5jdGlvbiAob3RoZXJvYmopIHs
+ICAgICAgICAgICAgICAgIHZhciBteWxlZnQgPSB0aGlzLng7
+ICAgICAgICAgICAgICAgIHZhciBteXJpZ2h0ID0gdGhpcy54ICsgKHRoaXMud2lkdGgpOw
+ICAgICAgICAgICAgICAgIHZhciBteXRvcCA9IHRoaXMueTs
+ICAgICAgICAgICAgICAgIHZhciBteWJvdHRvbSA9IHRoaXMueSArICh0aGlzLmhlaWdodCk7
+ICAgICAgICAgICAgICAgIHZhciBvdGhlcmxlZnQgPSBvdGhlcm9iai54Ow
+ICAgICAgICAgICAgICAgIHZhciBvdGhlcnJpZ2h0ID0gb3RoZXJvYmoueCArIChvdGhlcm9iai53aWR0aCk7
+ICAgICAgICAgICAgICAgIHZhciBvdGhlcnRvcCA9IG90aGVyb2JqLnk7
+ICAgICAgICAgICAgICAgIHZhciBvdGhlcmJvdHRvbSA9IG90aGVyb2JqLnkgKyAob3RoZXJvYmouaGVpZ2h0KTs
+ICAgICAgICAgICAgICAgIHZhciBjcmFzaCA9IHRydWU7
+ICAgICAgICAgICAgICAgIGlmICgobXlib3R0b20gPCBvdGhlcnRvcCkgfHwgKG15dG9wID4gb3RoZXJib3R0b20pIHx8IChteXJpZ2h0IDwgb3RoZXJsZWZ0KSB8fCAobXlsZWZ0ID4gb3RoZXJyaWdodCkpIHs
+ICAgICAgICAgICAgICAgICAgICBjcmFzaCA9IGZhbHNlOw
+ICAgICAgICAgICAgICAgIH0
+ICAgICAgICAgICAgICAgIHJldHVybiBjcmFzaDs
+ICAgICAgICAgICAgfQ
+ICAgICAgICB9
 
-            while (vaild == true) {
-                if (localStorage.getItem("vaild") == true) {
-                    vaild = true;
-                }
-                var input = btoa(prompt("Please Enter Product Code", "CS-"))
-                vaild = LicenseCodes.includes(input)
-            }
-            localStorage.setItem("vaild", true);
-        }
+ICAgICAgICBmdW5jdGlvbiB1cGRhdGVHYW1lQXJlYSgpIHs
+ICAgICAgICAgICAgdmFyIHgs
+ICAgICAgICAgICAgaGVpZ2h0LA
+ICAgICAgICAgICAgZ2FwLA
+ICAgICAgICAgICAgbWluSGVpZ2h0LA
+ICAgICAgICAgICAgbWF4SGVpZ2h0LA
+ICAgICAgICAgICAgbWluR2FwLA
+ICAgICAgICAgICAgbWF4R2FwOw
+ICAgICAgICAgICAgZm9yIChpID0gMDsgaSA8IG15T2JzdGFjbGVzLmxlbmd0aDsgaSArPSAxKSB7
+ICAgICAgICAgICAgICAgIGlmIChteUdhbWVQaWVjZS5jcmFzaFdpdGgobXlPYnN0YWNsZXNbaV0pKSB7
+ICAgICAgICAgICAgICAgICAgICByZXR1cm47
+ICAgICAgICAgICAgICAgIH0
+ICAgICAgICAgICAgfQ
+ICAgICAgICAgICAgbXlHYW1lQXJlYS5jbGVhcigpOw
+ICAgICAgICAgICAgbXlHYW1lQXJlYS5mcmFtZU5vICs9IDE7
+ICAgICAgICAgICAgaWYgKG15R2FtZUFyZWEuZnJhbWVObyA9PSAxIHx8IGV2ZXJ5aW50ZXJ2YWwoMTUwKSkgew
+ICAgICAgICAgICAgICAgIHggPSBteUdhbWVBcmVhLmNhbnZhcy53aWR0aDs
+ICAgICAgICAgICAgICAgIG1pbkhlaWdodCA9IDIwOw
+ICAgICAgICAgICAgICAgIG1heEhlaWdodCA9IDIwMDs
+ICAgICAgICAgICAgICAgIGhlaWdodCA9IE1hdGguZmxvb3IoTWF0aC5yYW5kb20oKSAqIChtYXhIZWlnaHQgLSBtaW5IZWlnaHQgKyAxKSArIG1pbkhlaWdodCk7
+ICAgICAgICAgICAgICAgIG1pbkdhcCA9IDUwOw
+ICAgICAgICAgICAgICAgIG1heEdhcCA9IDIwMDs
+ICAgICAgICAgICAgICAgIGdhcCA9IE1hdGguZmxvb3IoTWF0aC5yYW5kb20oKSAqIChtYXhHYXAgLSBtaW5HYXAgKyAxKSArIG1pbkdhcCk7
+ICAgICAgICAgICAgICAgIG15T2JzdGFjbGVzLnB1c2gobmV3IGNvbXBvbmVudCgxMCwgaGVpZ2h0LCAiZ3JlZW4iLCB4LCAwKSk7
+ICAgICAgICAgICAgICAgIG15T2JzdGFjbGVzLnB1c2gobmV3IGNvbXBvbmVudCgxMCwgeCAtIGhlaWdodCAtIGdhcCwgImdyZWVuIiwgeCwgaGVpZ2h0ICsgZ2FwKSk7
+ICAgICAgICAgICAgfQ
+ICAgICAgICAgICAgZm9yIChpID0gMDsgaSA8IG15T2JzdGFjbGVzLmxlbmd0aDsgaSArPSAxKSB7
+ICAgICAgICAgICAgICAgIG15T2JzdGFjbGVzW2ldLnggKz0gLTE7
+ICAgICAgICAgICAgICAgIG15T2JzdGFjbGVzW2ldLnVwZGF0ZSgpOw
+ICAgICAgICAgICAgfQ
+ICAgICAgICAgICAgbXlTY29yZS50ZXh0ID0gIlNDT1JFOiAiICsgbXlHYW1lQXJlYS5mcmFtZU5vOw
+ICAgICAgICAgICAgbXlTY29yZS51cGRhdGUoKTs
+ICAgICAgICAgICAgbXlHYW1lUGllY2UubmV3UG9zKCk7
+ICAgICAgICAgICAgbXlHYW1lUGllY2UudXBkYXRlKCk7
+ICAgICAgICB9
 
-        checkLicense()
-        if (d.getFullYear() > 2021) {
-            if (d.getMonth > 0) {
-                while (true !== false) {
-                    alert("Your Subscription for Clappy Sqaure Has Ended.\n Payment Options: https://eaterminer.github.io/ClappySqaure/pricing")
-                }
-            }
-        }
+ICAgICAgICBmdW5jdGlvbiBldmVyeWludGVydmFsKG4pIHs
+ICAgICAgICAgICAgaWYgKChteUdhbWVBcmVhLmZyYW1lTm8gLyBuKSAlIDEgPT0gMCkgew
+ICAgICAgICAgICAgICAgIHJldHVybiB0cnVlOw
+ICAgICAgICAgICAgfQ
+ICAgICAgICAgICAgcmV0dXJuIGZhbHNlOw
+ICAgICAgICB9
+
+
+
+ICAgICAgICBmdW5jdGlvbiBhY2NlbGVyYXRlKG4pIHs
+ICAgICAgICAgICAgaWYgKCFteUdhbWVBcmVhLmludGVydmFsKSB7
+ICAgICAgICAgICAgICAgIG15R2FtZUFyZWEuaW50ZXJ2YWwgPSBzZXRJbnRlcnZhbCh1cGRhdGVHYW1lQXJlYSwgMjApOw
+ICAgICAgICAgICAgfQ
+
+ICAgICAgICAgICAgbXlHYW1lUGllY2UuZ3Jhdml0eSA9IG47
+ICAgICAgICB9
+
+ICAgICAgICBmdW5jdGlvbiBmcmVlemUoKSB7
+ICAgICAgICAgICAgc3RhcnRHYW1lKCk7
+ICAgICAgICAgICAgY2FudmFzOiBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiY2FudmFzIik
+ICAgICAgICAgICAgbXlPYnN0YWNsZXMgPSBbXTs
+ICAgICAgICAgICAgbXlHYW1lQXJlYSA9IHs
+ICAgICAgICAgICAgICAgIGNhbnZhczogZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImNhbnZhcyIpLA
+ICAgICAgICAgICAgICAgIHN0YXJ0OiBmdW5jdGlvbiAoKSB7
+ICAgICAgICAgICAgICAgICAgICBkb2N1bWVudC5ib2R5Lmluc2VydEJlZm9yZSh0aGlzLmNhbnZhcywgZG9jdW1lbnQuYm9keS5jaGlsZE5vZGVzWzBdKTs
+ICAgICAgICAgICAgICAgICAgICB0aGlzLmZyYW1lTm8gPSAwOw
+ICAgICAgICAgICAgICAgICAgICB1cGRhdGVHYW1lQXJlYSgpOw
+ICAgICAgICAgICAgICAgIH0s
+ICAgICAgICAgICAgfQ
+ICAgICAgICAgICAgdGhpcy5jb250ZXh0LmNsZWFyUmVjdCgwLCAwLCB0aGlzLmNhbnZhcy53aWR0aCwgdGhpcy5jYW52YXMuaGVpZ2h0KTs
+ICAgICAgICB9
+
+ICAgICAgICBmdW5jdGlvbiByZXN0YXJ0KCkgew
+ICAgICAgICAgICAgbG9jYXRpb24ucmVsb2FkKCk
+ICAgICAgICB9
+
+ICAgICAgICBmdW5jdGlvbiBjaGVja0xpY2Vuc2UoKSB7
+ICAgICAgICAgICAgdmFyIExpY2Vuc2VDb2RlcyA9
+ICAgICAgICAgICAgWyJRMU10UzBKRk9EQlVSVGs9Iiw
+ICAgICAgICAgICAgICAgICJRMU10TWs5S1UwOUhVa2c9Iiw
+ICAgICAgICAgICAgICAgICJRMU10VGxkWk0xTlJWRW89Iiw
+ICAgICAgICAgICAgICAgICJRMU10VWxSRVRWQlFNVGM9Iiw
+ICAgICAgICAgICAgICAgICJRMU10VTBFNVZVRkZObGc9Iiw
+ICAgICAgICAgICAgICAgICJRMU10V1VOWVRWaERTVlk9Iiw
+ICAgICAgICAgICAgICAgICJRMU10U3pnd1VsVldNalE9Iiw
+ICAgICAgICAgICAgICAgICJRMU10T1ZCQk1reGFNelk9Iiw
+ICAgICAgICAgICAgICAgICJRMU10UVVRelFVdEhValU9Iiw
+ICAgICAgICAgICAgICAgICJRMU10V2toQlJsSkpTakk9Iiw
+ICAgICAgICAgICAgICAgICJRMU10VFU1RFREWkRRazg9Iiw
+ICAgICAgICAgICAgICAgICJRMU10TnpoUFRraEZSekU9Iiw
+ICAgICAgICAgICAgICAgICJRMU10UzFsWldVdElPVVU9Iiw
+ICAgICAgICAgICAgICAgICJRMU10U3psYVJVSXpXRW89Iiw
+ICAgICAgICAgICAgICAgICJRMU10U2tnNFFWTlNNakU9Iiw
+ICAgICAgICAgICAgICAgICJRMU10T1RoQlIwVTJRMW89Iiw
+ICAgICAgICAgICAgICAgICJRMU10UTBZMVR6TXpUa3M9Iiw
+ICAgICAgICAgICAgICAgICJRMU10VURGWVFUbEhVMUU9Iiw
+ICAgICAgICAgICAgICAgICJRMU10VFVKWFRVbFBSa1E9Iiw
+ICAgICAgICAgICAgICAgICJRMU10VERWVFVsaFFSa1E9Iiw
+ICAgICAgICAgICAgICAgICJRMU10VmtwYVFsaEdUVUk9Iiw
+ICAgICAgICAgICAgICAgICJRMU10U0ZwR1VFbFhSRFU9Iiw
+ICAgICAgICAgICAgICAgICJRMU10VFRKTU9GRkpPVGs9Iiw
+ICAgICAgICAgICAgICAgICJRMU10VTB0SlZ6ZEJXVm89Iiw
+ICAgICAgICAgICAgICAgICJRMU10VlVkYVVWTkxTVmc9Iiw
+ICAgICAgICAgICAgICAgICJRMU10V2xCWVZGTTFOVGM9Iiw
+ICAgICAgICAgICAgICAgICJRMU10UlZaVlRWbERWRms9Iiw
+ICAgICAgICAgICAgICAgICJRMU10VmpaRVVGaENOakU9Iiw
+ICAgICAgICAgICAgICAgICJRMU10V0ZwWVdsbFRXRlU9Iiw
+ICAgICAgICAgICAgICAgICJRMU10VjBreFIwNU5TMGM9Iiw
+ICAgICAgICAgICAgICAgICJRMU10VkVWVFZBPT0iXQ
+
+ICAgICAgICAgICAgd2hpbGUgKHZhaWxkID09IHRydWUpIHs
+ICAgICAgICAgICAgICAgIGlmIChsb2NhbFN0b3JhZ2UuZ2V0SXRlbSgidmFpbGQiKSA9PSB0cnVlKSB7
+ICAgICAgICAgICAgICAgICAgICB2YWlsZCA9IHRydWU7
+ICAgICAgICAgICAgICAgIH0
+ICAgICAgICAgICAgICAgIHZhciBpbnB1dCA9IGJ0b2EocHJvbXB0KCJQbGVhc2UgRW50ZXIgUHJvZHVjdCBDb2RlIiwgIkNTLSIpKQ
+ICAgICAgICAgICAgICAgIHZhaWxkID0gTGljZW5zZUNvZGVzLmluY2x1ZGVzKGlucHV0KQ
+ICAgICAgICAgICAgfQ
+ICAgICAgICAgICAgbG9jYWxTdG9yYWdlLnNldEl0ZW0oInZhaWxkIiwgdHJ1ZSk7
+ICAgICAgICB9
+
+ICAgICAgICBjaGVja0xpY2Vuc2UoKQ
+ICAgICAgICBpZiAoZC5nZXRGdWxsWWVhcigpID4gMjAyMSkgew
+ICAgICAgICAgICAgaWYgKGQuZ2V0TW9udGggPiAwKSB7
+ICAgICAgICAgICAgICAgIHdoaWxlICh0cnVlICE9PSBmYWxzZSkgew
+ICAgICAgICAgICAgICAgICAgICBhbGVydCgiWW91ciBTdWJzY3JpcHRpb24gZm9yIENsYXBweSBTcWF1cmUgSGFzIEVuZGVkLlxuIFBheW1lbnQgT3B0aW9uczogaHR0cHM6Ly9lYXRlcm1pbmVyLmdpdGh1Yi5pby9DbGFwcHlTcWF1cmUvcHJpY2luZyIp
+ICAgICAgICAgICAgICAgIH0
+ICAgICAgICAgICAgfQ
+ICAgICAgICB9)
+
+code
