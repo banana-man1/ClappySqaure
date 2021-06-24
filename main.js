@@ -1,12 +1,24 @@
-console.log("HEY! I'm Watching...")
+document.onkeydown = function(e) {
+        if (e.ctrlKey && (e.keyCode === 85)) {
+            alert("Ctrl + U Has Been Blocked \n Anti Piracy System")
+            return false;
+        } else if (e.ctrlKey && (e.keyCode === 73) && e.shiftKey) {
+        	alert("Ctrl + Shift + I Has Been Blocked \n Anti Piracy System")
+            return false;
+        } else if (e.keyCode === 32) {
+          accelerate(speed)
+			setTimeout(function() {
+  alert('I am anonymous');
+}, milliseconds)
+        }
+}
+
         var myGamePiece, myScore, speed;
         var vaild = false;
         var myObstacles = [];
         function keypress() {
             accelerate(speed)
         }
-
-        //document.getElementById("body").addEventListener("keypress", keypress);
 
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js');
