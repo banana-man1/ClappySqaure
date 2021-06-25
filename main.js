@@ -20,10 +20,19 @@ document.onkeydown = function(e) {
 }
 function mouseCheck(event) {
 	if (event.button == 2) {
-		alert("Right Click Has Been Blocked /n Anti Piracy System")
+		
 		return false;
 	}
 }
+
+element.addEventListener('contextmenu', function(evt) { 
+	alert("Right Click Has Been Blocked /n Anti Piracy System")
+  evt.preventDefault();
+}, false);
+element.addEventListener('contextmenu', function(evt) {
+	alert("Right Click Has Been Blocked /n Anti Piracy System")
+	evt.preventDefault();
+}, false);
 
 function debugCheck() {
 	var startTime = performance.now();
