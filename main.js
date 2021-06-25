@@ -26,11 +26,7 @@ function mouseCheck(event) {
 	}
 }
 
-element.addEventListener('contextmenu', function(evt) { 
-	alert("Right Click Has Been Blocked /n Anti Piracy System")
-  evt.preventDefault();
-}, false);
-element.addEventListener('contextmenu', function(evt) {
+document.addEventListener('contextmenu', function(evt) { 
 	alert("Right Click Has Been Blocked /n Anti Piracy System")
 	evt.preventDefault();
 }, false);
