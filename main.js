@@ -12,21 +12,14 @@ document.onkeydown = function(e) {
 		alert("Ctrl + Shift + I Has Been Blocked \n Anti Piracy System")
 		return false;
 	} else if (e.keyCode === 32) {
-		accelerate(speed)
+		accelerate(speed);
 		setTimeout(function() {
-			alert('SpAcE');
-			accelerate(-0.2)
+			accelerate(-0.2);
 		}, 100)
 	}
 }
-function mouseCheck(event) {
-	if (event.button == 2) {
-		
-		return false;
-	}
-}
 
-document.addEventListener('contextmenu', function(evt) { 
+document.addEventListener('contextmenu', function(evt) {
 	alert("Right Click Has Been Blocked /n Anti Piracy System")
 	evt.preventDefault();
 }, false);
@@ -45,6 +38,7 @@ setInterval(debugCheck, 500)
 
 var myGamePiece, myScore, speed;
 var vaild = false;
+var d = new Date();
 var myObstacles = [];
 
 function keypress() {
@@ -222,51 +216,48 @@ function restart() {
 	location.reload()
 }
 
-function checkLicense() {
-	var LicenseCodes = ["Q1MtS0JFODBURTk=",
-		"Q1MtMk9KU09HUkg=",
-		"Q1MtTldZM1NRVEo=",
-		"Q1MtUlRETVBQMTc=",
-		"Q1MtU0E5VUFFNlg=",
-		"Q1MtWUNYTVhDSVY=",
-		"Q1MtSzgwUlVWMjQ=",
-		"Q1MtOVBBMkxaMzY=",
-		"Q1MtQUQzQUtHUjU=",
-		"Q1MtWkhBRlJJSjI=",
-		"Q1MtTU5DTDZDQk8=",
-		"Q1MtNzhPTkhFRzE=",
-		"Q1MtS1lZWUtIOUU=",
-		"Q1MtSzlaRUIzWEo=",
-		"Q1MtSkg4QVNSMjE=",
-		"Q1MtOThBR0U2Q1o=",
-		"Q1MtQ0Y1TzMzTks=",
-		"Q1MtUDFYQTlHU1E=",
-		"Q1MtTUJXTUlPRkQ=",
-		"Q1MtTDVTUlhQRkQ=",
-		"Q1MtVkpaQlhGTUI=",
-		"Q1MtSFpGUElXRDU=",
-		"Q1MtTTJMOFFJOTk=",
-		"Q1MtU0tJVzdBWVo=",
-		"Q1MtVUdaUVNLSVg=",
-		"Q1MtWlBYVFM1NTc=",
-		"Q1MtRVZVTVlDVFk=",
-		"Q1MtVjZEUFhCNjE=",
-		"Q1MtWFpYWllTWFU=",
-		"Q1MtV0kxR05NS0c=",
-		"Q1MtVEVTVA=="
-	]
+var LicenseCodes = ["Q1MtS0JFODBURTk=",
+	"Q1MtMk9KU09HUkg=",
+	"Q1MtTldZM1NRVEo=",
+	"Q1MtUlRETVBQMTc=",
+	"Q1MtU0E5VUFFNlg=",
+	"Q1MtWUNYTVhDSVY=",
+	"Q1MtSzgwUlVWMjQ=",
+	"Q1MtOVBBMkxaMzY=",
+	"Q1MtQUQzQUtHUjU=",
+	"Q1MtWkhBRlJJSjI=",
+	"Q1MtTU5DTDZDQk8=",
+	"Q1MtNzhPTkhFRzE=",
+	"Q1MtS1lZWUtIOUU=",
+	"Q1MtSzlaRUIzWEo=",
+	"Q1MtSkg4QVNSMjE=",
+	"Q1MtOThBR0U2Q1o=",
+	"Q1MtQ0Y1TzMzTks=",
+	"Q1MtUDFYQTlHU1E=",
+	"Q1MtTUJXTUlPRkQ=",
+	"Q1MtTDVTUlhQRkQ=",
+	"Q1MtVkpaQlhGTUI=",
+	"Q1MtSFpGUElXRDU=",
+	"Q1MtTTJMOFFJOTk=",
+	"Q1MtU0tJVzdBWVo=",
+	"Q1MtVUdaUVNLSVg=",
+	"Q1MtWlBYVFM1NTc=",
+	"Q1MtRVZVTVlDVFk=",
+	"Q1MtVjZEUFhCNjE=",
+	"Q1MtWFpYWllTWFU=",
+	"Q1MtV0kxR05NS0c=",
+	"Q1MtVEVTVA=="
+]
 
-	while (vaild == true) {
-		if (localStorage.getItem("vaild") == true) {
-			vaild = true;
-		}
-		var input = btoa(prompt("Please Enter Product Code", "CS-"))
-		vaild = LicenseCodes.includes(input)
+while (vaild == false) {
+	if (localStorage.getItem("vaild") == true) {
+		vaild = true;
 	}
-	localStorage.setItem("vaild", true);
+	var input = btoa(prompt("Please Enter Product Code", "CS-"))
+	vaild = LicenseCodes.includes(input)
 }
+localStorage.setItem("vaild", true);
 
-checkLicense()
 if (d.getFullYear() > 2021) {
 	if (d.getMonth > 0) {
 		while (true !== false) {
