@@ -3,8 +3,8 @@ function debugCheck() {
 	//debugger;
 	var stopTime = performance.now();
 	if ((stopTime - startTime) > 500) {
-		alert("Chrome Devtools Has Been Blocked /n Anti Piracy System")
 		document.getElementById("body").innerHTML = "Chrome Devtools Has Been Activated. Document Content Has Been Removed. <br> Please Refresh"
+		alert("Chrome Devtools Has Been Blocked /n Anti Piracy System")
 	}
 }
 
