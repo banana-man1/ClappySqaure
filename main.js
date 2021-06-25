@@ -81,6 +81,8 @@ document.addEventListener('contextmenu', function(evt) {
 }, false);
 
 // INSTANT
+setInterval(debugCheck, 500)
+
 if ('serviceWorker' in navigator) {
 	navigator.serviceWorker.register('sw.js');
 }
@@ -98,5 +100,3 @@ if ((d.getFullYear() > 2021 && d.getMonth > 0)) {
 		alert("Your Subscription for Clappy Sqaure Has Ended.\n Payment Options: https://eaterminer.github.io/ClappySqaure/pricing")
 	}
 }
-
-setInterval(debugCheck, 500)
