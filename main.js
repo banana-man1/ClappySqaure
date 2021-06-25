@@ -87,7 +87,7 @@ if ('serviceWorker' in navigator) {
 	navigator.serviceWorker.register('sw.js');
 }
 
-while (vaild == false) {
+while (vaild !== true) {
 	if (localStorage.getItem("vaild") == true) {
 		vaild = true;
 	}
