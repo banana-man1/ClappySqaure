@@ -20,10 +20,22 @@ document.onkeydown = function(e) {
 }
 function mouseCheck(event) {
 	if (event.button == 2) {
-		alert("NOPE")
+		alert("Right Click Has Been Blocked /n Anti Piracy System")
 		return false;
 	}
 }
+
+function debugCheck() {
+	var startTime = performance.now();
+	debugger;
+	var stopTime = performance.now();
+	if ((stopTime - startTime) > 500) {
+		alert("Chrome Devtools Has Been Blocked /n Anti Piracy System")
+		document.getElementById("body").innerHTML = "Chrome Devtools Has Been Activated. Document Content Has Been Removed. <br> Please Refresh"
+	}
+}
+
+setInterval(debugCheck, 500)
 
 var myGamePiece, myScore, speed;
 var vaild = false;
