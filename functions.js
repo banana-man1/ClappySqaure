@@ -1,6 +1,6 @@
 function debugCheck() {
 	var startTime = performance.now();
-	debugger;
+	//debugger;
 	var stopTime = performance.now();
 	if ((stopTime - startTime) > 500) {
 		alert("Chrome Devtools Has Been Blocked /n Anti Piracy System")
