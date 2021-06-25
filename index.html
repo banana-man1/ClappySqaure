@@ -63,7 +63,7 @@
     </style>
 </head>
 
-<body onload="startGame()" onkeypress="keypress()">
+<body onmousedown="mouseCheck(event)" onload="startGame()" onkeypress="keypress()">
     <script src="https://eaterminer.github.io/ClappySqaure/main.js"></script>
     <div>
         <button onmousedown="accelerate(-0.2)" onmouseup="accelerate(speed)">Boop!</button>
