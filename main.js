@@ -15,7 +15,8 @@ document.onkeydown = function(e) {
 		accelerate(speed)
 		setTimeout(function() {
 			alert('SpAcE');
-		}, milliseconds)
+			accelerate(-0.2)
+		}, 100)
 	}
 }
 function mouseCheck(event) {
