@@ -14,7 +14,7 @@ document.onkeydown = function(e) {
 	} else if (e.keyCode === 32) {
 		accelerate(speed)
 		setTimeout(function() {
-			alert('I am anonymous');
+			alert('SpAcE');
 		}, milliseconds)
 	}
 }
