@@ -3,6 +3,9 @@ const RUNTIME = 'runtime';
 
 const PRECACHE_URLS = [
   'index.html',
+  'styles.css',
+  'functions.js',
+  'main.js',
   './'
 ];
 
