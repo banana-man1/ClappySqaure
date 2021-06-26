@@ -1,28 +1,28 @@
-function debugCheck() {
-	var startTime = performance.now();
-	//debugger;
-	var stopTime = performance.now();
-	if ((stopTime - startTime) > 500) {
-		document.getElementById("body").innerHTML = "Chrome Devtools Has Been Activated. Document Content Has Been Removed. <br> Please Refresh"
-		alert("Chrome Devtools Has Been Blocked /n Anti Piracy System")
-	}
-}
+//function debugCheck() {
+//	var startTime = performance.now();
+//	//debugger;
+//	var stopTime = performance.now();
+//	if ((stopTime - startTime) > 500) {
+//		document.getElementById("body").innerHTML = "Chrome Devtools Has Been Activated. Document Content Has Been Removed. <br> Please Refresh"
+//		alert("Chrome Devtools Has Been Blocked /n Anti Piracy System")
+//	}
+//}
 
 function startGame() {
 	var jumpSlider = document.getElementById("jumpHeight");
 	speed = jumpSlider.value / 100;
 
-	jumpSlider.oninput = function() {
-		speed = this.value / 100;
-	}
+//	jumpSlider.oninput = function() {
+//		speed = this.value / 100;
+//	}
 
 
 	var gravitySlider = document.getElementById("gravityStrength");
 	gravity = gravitySlider.value / 100;
 
-	gravitySlider.oninput = function() {
-		gravity = this.value / 100;
-	}
+//	gravitySlider.oninput = function() {
+//		gravity = this.value / 100;
+//	}
 
 	myGamePiece = new component(30, 30, "red", 10, 120);
 	myGamePiece.gravity = gravity;
@@ -57,7 +57,7 @@ function component(width, height, color, x, y, type) {
 		this.x += this.speedX;
 		this.y += this.speedY + this.gravitySpeed;
 		this.hitBottom();
-		this.hitTop();
+	//	this.hitTop();
 	}
 	this.hitBottom = function() {
 		var rockbottom = myGameArea.canvas.height - this.height;
@@ -66,13 +66,13 @@ function component(width, height, color, x, y, type) {
 			this.gravitySpeed = 0;
 		}
 	}
-	this.hitTop = function() {
-		var rocktop = 0;
-		if (this.y < rocktop) {
-			this.y = rocktop;
-			this.gravitySpeed = 0;
-		}
-	}
+//	this.hitTop = function() {
+//		var rocktop = 0;
+//		if (this.y < rocktop) {
+//			this.y = rocktop;
+//			this.gravitySpeed = 0;
+//		}
+//	}
 	this.crashWith = function(otherobj) {
 		var myleft = this.x;
 		var myright = this.x + (this.width);
@@ -121,6 +121,10 @@ function updateGameArea() {
 		myObstacles[i].update();
 	}
 	myScore.text = "SCORE: " + myGameArea.frameNo;
+//	if (myGameArea.frameNo > localStorage.getItem("hiScore")) {
+//		localStorage.setItem("hiScore", myGameArea.frameNo);
+//		document.getElementById("hiScore").innerHTML = myGameArea.frameNo;
+//	}
 	myScore.update();
 	myGamePiece.newPos();
 	myGamePiece.update();
@@ -139,21 +143,21 @@ function accelerate(n) {
 
 
 
-function freeze() {
-	startGame();
-	canvas: document.getElementById("canvas")
-	myObstacles = [];
-	myGameArea = {
-		canvas: document.getElementById("canvas"),
-		start: function() {
-			document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-			this.frameNo = 0;
-			updateGameArea();
-		},
-	}
-	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-}
+//function freeze() {
+//	startGame();
+//	canvas: document.getElementById("canvas")
+//	myObstacles = [];
+//	myGameArea = {
+//		canvas: document.getElementById("canvas"),
+//		start: function() {
+//			document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+//			this.frameNo = 0;
+//			updateGameArea();
+//		},
+//	}
+//	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+//}
 
-function restart() {
-	location.reload()
-}
+//function restart() {
+//	location.reload()
+//}

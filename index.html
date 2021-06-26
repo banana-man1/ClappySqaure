@@ -4,10 +4,12 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="manifest" href="manifest.json">
-    <title>Clappy Sqaure!</title>a
+    <title>Clappy Sqaure!</title>
     <link rel="stylesheet" href="https://eaterminer.github.io/ClappySqaure/styles.css" async>
-    <script src="https://eaterminer.github.io/ClappySqaure/functions.js" defer></script>
-    <script src="https://eaterminer.github.io/ClappySqaure/main.js" defer></script>
+    <script src="newVars.js"></script>
+    <script src="newFunctions.js"></script>
+    <script src="newMain.js" defer></script>
+    <script src="default.js" defer></script>
 </head>
 
 <body id="body" onload="startGame()" onkeypress="keypress()">
@@ -16,6 +18,9 @@
         <button onclick="freeze()">Freeze!</button>
         <button onclick="restart()">Restart!</button>
     </div>
+    <div class="stats">
+        <p>High Score: <span id="hiScore"></span></p>
+        </div>
     <div>
         <p id="titleJump">
             Jump Height:
@@ -33,6 +38,7 @@
         </div>
     </div>
     <a href=help/privacy.md>Privacy Policy</a>
+    <a href=help/changelog.txt>See Whats New!</a>
     <noscript>Please Enable Javascript or click<a>Here</a></noscript>
 </body>
 
