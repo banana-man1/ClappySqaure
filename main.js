@@ -39,7 +39,7 @@ while (vaild !== true) {
 }
 localStorage.setItem("vaild", true);
 
-if ((d.getFullYear() > 2021 && d.getMonth > 0)) {
+if (d.getFullYear() > 2021 && d.getMonth > 0) {
 	while (true) {
 		alert("Your Subscription for Clappy Sqaure Has Ended.\n Payment Options: https:eaterminer.github.io/ClappySqaure/pricing")
 	}

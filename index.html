@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="html">
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="manifest" href="manifest.json">
     <title>Clappy Sqaure!</title>
-    <link rel="stylesheet" href="https://eaterminer.github.io/ClappySqaure/styles.css" async>
+    <link rel="stylesheet" href="styles.css" async>
     <script src="newVars.js"></script>
     <script src="newFunctions.js"></script>
     <script src="newEvents.js" defer></script>
     <script src="newMain.js" defer></script>
 </head>
 
-<body id="body" onload="startGame()" onkeypress="keypress()">
+<body id="body" onload="startGame()">
     <div>
         <button onmousedown="accelerate(-0.2)" onmouseup="accelerate(speed)">Boop!</button>
         <button onclick="freeze()">Freeze!</button>
         <button onclick="restart()">Restart!</button>
     </div>
     <div class="stats">
-        <p>High Score: <span id="hiScore"></span></p>
+        <p>High Score: <span id="highScore"></span></p>
         </div>
     <div>
         <p id="titleJump">

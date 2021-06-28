@@ -5,6 +5,15 @@ function startGame() {
 	myGameArea.start()
 }
 
+function debugCheck() {
+	startTime = performance.now()
+	debugger
+	stopTime = performance.now()
+	if ((stopTime - startTime) > 500) {
+		document.getElementById("html").innerHTML = debuggerActive
+	}
+}
+
 function component(width, height, color, x, y, type) {
 	this.type = type
 	this.score = 0
@@ -32,11 +41,18 @@ function component(width, height, color, x, y, type) {
 		this.x += this.speedX
 		this.y += this.speedY + this.gravitySpeed
 		this.hitBottom()
+		this.hitTop()
 	}
 	this.hitBottom = function () {
-		var rockbottom = myGameArea.canvas.height - this.height
-		if (this.y > rockbottom) {
-			this.y = rockbottom
+		var tmp = myGameArea.canvas.height - this.height
+		if (this.y > tmp) {
+			this.y = tmp
+			this.gravitySpeed = 0
+		}
+	}
+	this.hitTop = function() {
+		if (this.y < 0) {
+			this.y = 0
 			this.gravitySpeed = 0
 		}
 	}
@@ -57,11 +73,14 @@ function component(width, height, color, x, y, type) {
 	}
 }
 
-// UNMODDED CODE
 function updateGameArea() {
 	var x, height, gap, minHeight, maxHeight, minGap, maxGap
 	for (i = 0; i < myObstacles.length; i += 1) {
 		if (myGamePiece.crashWith(myObstacles[i])) {
+			if (myGameArea.frameNo > localStorage.getItem("highScore")) {
+				localStorage.setItem("highScore", myGameArea.frameNo)
+				document.getElementById("highScore").innerHTML = myGameArea.frameNo
+			}
 			return
 		}
 	}
@@ -101,4 +120,14 @@ function accelerate(n) {
 	}
 
 	myGamePiece.gravity = n
+}
+
+function freeze() {
+	myGameArea = {
+		canvas: document.getElementById("canvas")
+	}
+}
+
+function restart() {
+	location.reload()
 }

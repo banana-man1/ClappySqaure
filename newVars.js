@@ -1,5 +1,6 @@
-var myGameArea, speed, myGamePiece, myObstacles, myScore, vaild, d, myObstacles, licenseCodes;
+var jumpSlider, debuggerActive, gravitySilder, myGameArea, key, tmp, speed, myGamePiece, myObstacles, myScore, vaild, d, myObstacles, licenseCodes;
 myObstacles = []
+debuggerActive = "Sorry, Viewing Soure Code and Pirating Applications Is NOT LEGAL and thus I Have Stopped You!"
 speed = 0.05
 gravity = 0.05
 d = new Date()

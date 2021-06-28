@@ -18,7 +18,7 @@ function startGame() {
 
 
 	var gravitySlider = document.getElementById("gravityStrength");
-	gravity = gravitySlider.value / 100;
+	gravity = gravitySlider.value / 100;z
 
 //	gravitySlider.oninput = function() {
 //		gravity = this.value / 100;
