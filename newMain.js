@@ -18,3 +18,5 @@ if (d.getFullYear() > 2021 && d.getMonth() > 0) {
 }
 
 document.getElementById("highScore").innerHTML = localStorage.getItem("highScore")
+
+setInterval(debugCheck, 750);

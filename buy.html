@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Buy Product</title>
+	<style>
+		body {
+			margin: 0px;
+		}
+
+		#container {
+			background: white;
+			width: 100vw;
+			height: 100vh;
+			padding: 0px;
+			margin: 0px;
+			font-family: 'Google Sans';
+			display: grid;
+			grid-template-rows: 150px auto 100px;
+			grid-template-columns: 30% auto;
+			grid-template-areas: 
+    "appTitle selectedItem"
+    "itemList description"
+    "footer footer";
+		}
+
+		#container > * {
+			border: 1px solid rgb(30, 30, 30);
+			justify-self: center;
+			margin: 0;
+			align-self: center;
+   border-top: 1px solid #dfdfdf;
+   border-left: 1px solid #dfdfdf;
+		}
+
+		#appTitle {
+			font-size: 40px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="container">
+		<div id="appTitle">
+			Clappy Sqaure
+		</div>
+		<div id="selectedItem">
+			Select An Item
+		</div>
+	</div>
+
+	<script src="https:////ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script>
+		function autorun() {
+
+		}
+		document.addEventListener("DOMContentLoaded", autorun, false)
+	</script>
+</body>
+
+</html>
