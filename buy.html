@@ -1,62 +1,40 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>Buy Product</title>
+		<style>
+			body {
+				background: white;
+				font-family: 'Google Sans';
+				margin: 0px;
+			}
+			#container {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				grid-template-rows: 1fr;
+				grid-column-gap: 0px;
+				grid-row-gap: 0px;
+			}
 
-<head>
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>Buy Product</title>
-	<style>
-		body {
-			margin: 0px;
-		}
-
-		#container {
-			background: white;
-			width: 100vw;
-			height: 100vh;
-			padding: 0px;
-			margin: 0px;
-			font-family: 'Google Sans';
-			display: grid;
-			grid-template-rows: 150px auto 100px;
-			grid-template-columns: 30% auto;
-			grid-template-areas: 
-    "appTitle selectedItem"
-    "itemList description"
-    "footer footer";
-		}
-
-		#container > * {
-			border: 1px solid rgb(30, 30, 30);
-			justify-self: center;
-			margin: 0;
-			align-self: center;
-   border-top: 1px solid #dfdfdf;
-   border-left: 1px solid #dfdfdf;
-		}
-
-		#appTitle {
-			font-size: 40px;
-		}
-	</style>
-</head>
-
-<body>
-	<div id="container">
-		<div id="appTitle">
-			Clappy Sqaure
+			#grid1 { grid-area: 1 / 1 / 2 / 2; }
+			#grid2 { grid-area: 1 / 2 / 2 / 3; }
+			#grid3 { grid-area: 1 / 3 / 2 / 4; }
+			.grid { text-align: center; }
+		</style>
+	</head>
+	<body>
+		<div id="container">
+			<div id="grid1" class="grid">
+				<h1>1 Product Key</h1>
+				<p>
+			</div>
+			<div id="grid2" class="grid">
+				<h1>2 Product Keys</h1>
+			</div>
+			<div id="grid3" class="grid">
+				<h1>3 Product Keys</h1>
+			</div>
 		</div>
-		<div id="selectedItem">
-			Select An Item
-		</div>
-	</div>
-
-	<script src="https:////ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<script>
-		function autorun() {
-
-		}
-		document.addEventListener("DOMContentLoaded", autorun, false)
-	</script>
-</body>
-
+	</body>
 </html>
